@@ -1,0 +1,16 @@
+services:
+  monitor:
+    build: 
+      context: ../src/monitor
+      dockerfile: ../../docker/Dockerfile.monitor
+    ports:
+      - "5001:5001"
+    depends_on:
+      - compras-service
+
+  compras-service:
+    build:
+      context: ../src/purchases
+      dockerfile: ../../docker/Dockerfile.purchases
+    ports:
+      - "5002:5002"
