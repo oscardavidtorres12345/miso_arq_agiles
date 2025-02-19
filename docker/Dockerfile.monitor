@@ -1,5 +1,8 @@
 FROM python:3.9-slim
 WORKDIR /app
+ENV MONITOR_PORT="5001"
+ENV PURCHASES_PORT="5002"
+ENV PURCHASES_HOST="ec2-54-87-174-191.compute-1.amazonaws.com"
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY app.py .
