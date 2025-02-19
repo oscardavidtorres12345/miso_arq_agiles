@@ -1,6 +1,13 @@
 from flask import Flask
 import random
+import os 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 app = Flask(__name__)
+
+purchases_port = os.getenv("PURCHASES_PORT")
 
 @app.route('/ping')
 def health_check():
@@ -9,4 +16,4 @@ def health_check():
     return {"status": "INTERNAL SERVER ERROR"}, 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=purchases_port)

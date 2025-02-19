@@ -3,6 +3,10 @@ import requests
 import logging
 import time
 import threading
+import os 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -13,9 +17,13 @@ logging.basicConfig(
     format='%(asctime)s - %(message)s'
 )
 
+purchases_host = os.getenv("PURCHASES_HOST")
+purchases_port = os.getenv("PURCHASES_PORT")
+monitor_port = os.getenv("MONITOR_PORT")
+
 def ping_service():
     try:
-        response = requests.get('http://ec2-54-87-174-191.compute-1.amazonaws.com:5000/ping')
+        response = requests.get(f"http://{purchases_host}:{purchases_port}/ping")
         return response.status_code == 200
     except requests.RequestException:
         return False
@@ -26,6 +34,7 @@ def monitor_status():
             response = ping_service()
             status = "healthy" if response else "unhealthy"
             log_message = f"Service status: {status}"
+            print(f"{log_message}")
             logging.info(log_message)
         except Exception as e:
             print(f"Request failed: {e}")
@@ -41,4 +50,4 @@ def index():
 
 if __name__ == "__main__":
 
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=monitor_port)
