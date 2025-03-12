@@ -6,4 +6,4 @@ dbapp.sqlite
 
 .env
 
-venv/*
+venv
