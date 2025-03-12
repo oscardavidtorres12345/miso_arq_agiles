@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource,Api
@@ -66,4 +67,4 @@ api.add_resource(VistaAutorizador, '/autorizar')
 api.add_resource(VistaRevocar, '/revocar')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('SERVICE_PORT', 6001)))

@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource,Api
@@ -39,7 +40,8 @@ class VistaEvento(Resource):
         eventos = RegistrarEvento.query.filter_by(usuario=usuario, strike=True).count()
         if eventos >= 3:
             evento = RegistrarEvento(usuario=usuario, payload={"message": "intento de acceso no autorizado"}, strike=True)
-            requests.put('http://127.0.0.1:5000/revocar', headers={'usuario':usuario})
+            autorizador_host = os.environ.get('AUTORIZADOR_HOST', 'http://127.0.0.1:5000')+'/revocar'
+            requests.put(autorizador_host, headers={'usuario':usuario})
             db.session.add(evento)
             db.session.commit()
             return '', 401
@@ -50,12 +52,12 @@ class VistaEvento(Resource):
             evento = RegistrarEvento(usuario=usuario, payload=payload, strike=request.json["strike"])
             db.session.add(evento)
             db.session.commit()
-            return
+            return {"mensaje": "Evento registrado correctamente"}, 201
 api.add_resource(VistaEvento, '/registrar_evento')
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=7000)
+    app.run(host='0.0.0.0', port=int(os.environ.get('SERVICE_PORT', 6002)))
 
 
 

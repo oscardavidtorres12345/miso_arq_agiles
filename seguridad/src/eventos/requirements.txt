@@ -1,4 +1,4 @@
-Flask==2.0.1
+Flask==3.1.0
 flask_jwt_extended==4.7.1
 flask_restful==0.3.10
 flask_sqlalchemy==3.1.1

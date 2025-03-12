@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 WORKDIR /app
-ENV EVENTOS_HOST="http://ec2-35-175-190-115.compute-1.amazonaws.com"
-ENV SERVICE_PORT="6000"
+ENV AUTORIZADOR_HOST="http://ec2-52-207-65-64.compute-1.amazonaws.com"
+ENV SERVICE_PORT="6002"
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY app.py .

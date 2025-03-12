@@ -5,3 +5,17 @@ services:
       dockerfile: ../../docker/Dockerfile.ventas
     ports:
       - "6000:6000"
+
+  autorizador-service:
+    build: 
+      context: ../src/autorizador
+      dockerfile: ../../docker/Dockerfile.autorizador
+    ports:
+      - "6001:6001"
+
+  eventos-service:
+    build: 
+      context: ../src/eventos
+      dockerfile: ../../docker/Dockerfile.eventos
+    ports:
+      - "6002:6002"
