@@ -1,16 +1,7 @@
 services:
-  monitor:
-    build: 
-      context: ../src/monitor
-      dockerfile: ../../docker/Dockerfile.monitor
-    ports:
-      - "5001:5001"
-    depends_on:
-      - compras-service
-
-  compras-service:
+  ventas-service:
     build:
-      context: ../src/purchases
-      dockerfile: ../../docker/Dockerfile.purchases
+      context: ../src/ventas
+      dockerfile: ../../docker/Dockerfile.ventas
     ports:
-      - "5002:5002"
+      - "6000:6000"

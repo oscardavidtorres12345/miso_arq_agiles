@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource,Api
@@ -33,7 +34,9 @@ class VistaVenta(Resource):
         headers = {'usuario':usuario_actual}
         if unidades > 30:
             payload['strike'] = True
-        response = requests.post('http://127.0.0.1:7000/registrar_evento',json=payload, headers=headers) 
+
+        eventos_endpoint = os.environ.get('EVENTOS_HOST', 'http://127.0.0.1:7000')+'/registrar_evento'
+        response = requests.post(eventos_endpoint, json=payload, headers=headers) 
         if response.status_code != HTTPStatus.UNAUTHORIZED:
             return {"mensaje": "Venta registrada exitosamente"}, 200
         return {"mensaje": "El usuario no tiene permisos para realizar la solicitud"}, 401
@@ -42,13 +45,4 @@ api.add_resource(VistaVenta, '/crear_venta')
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=6000)
-
-
-
-
-
-
-
-
-
+    app.run(host='0.0.0.0', port=int(os.environ.get('SERVICE_PORT', 6000)))
