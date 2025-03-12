@@ -3,3 +3,5 @@
 src/monitor/monitor.log
 
 dbapp.sqlite
+
+venv/*
