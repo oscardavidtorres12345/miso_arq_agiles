@@ -18,10 +18,31 @@ app_context.push()
 
 api = Api(app)
 
-Vendedores = [('usuario1','articulo',100),
-              ('usuario1','articulo',100),
-              ('usuario1','articulo',100),
-              ('usuario1','articulo',100)]
+import random
+
+
+usuarios = ['usuario1', 'usuario2', 'usuario3', 'usuario4', 'usuario5']
+
+
+Vendedores = []
+
+
+for _ in range(150):
+
+    usuario = random.choice(usuarios)
+    
+
+    if Vendedores.count(usuario) < 3:  
+        cantidad = random.randint(31, 50)  
+    else:
+        cantidad = random.randint(1, 29)  
+    
+    Vendedores.append((usuario, 'articulo', cantidad))
+
+# Vendedores = [('usuario3','articulo',100),
+#               ('usuario3','articulo',100),
+#               ('usuario3','articulo',100),
+#               ('usuario3','articulo',100)]
 
 class VistaSimularVentas(Resource):
 
@@ -42,7 +63,6 @@ api.add_resource(VistaSimularVentas, '/experimento')
 
 
 if __name__ == '__main__':
-    print('entrooooooo')
     app.run(host='0.0.0.0', port=6003)
 
 

@@ -38,8 +38,8 @@ class VistaEvento(Resource):
     def post(self):
         usuario = request.headers.get('usuario')
         eventos = RegistrarEvento.query.filter_by(usuario=usuario, strike=True).count()
-        if eventos >= 3:
-            evento = RegistrarEvento(usuario=usuario, payload={"message": "intento de acceso no autorizado"}, strike=True)
+        if eventos >= 25:
+            evento = RegistrarEvento(usuario=usuario, payload={"message": "intento de acceso no autorizado"}, strike=False)
             autorizador_host = os.environ.get('AUTORIZADOR_HOST', 'http://127.0.0.1:5000')+'/revocar'
             requests.put(autorizador_host, headers={'usuario':usuario})
             db.session.add(evento)
